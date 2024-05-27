@@ -1,0 +1,33 @@
+import arcpy
+from arcpy import env
+from arcpy.sa import *
+
+# Set environment settings
+env.workspace = "C:/path/to/your/workspace"  # Update with your workspace path
+
+# Input NetCDF file
+netcdf_file = "C:/path/to/your/netcdf_file.nc"  # Update with your NetCDF file path
+
+# Specify the NetCDF variable you want to convert
+variable = "your_variable_name"  # Update with the variable name from your NetCDF file
+
+# Output TIFF file
+output_tiff = "C:/path/to/output/output_file.tif"  # Update with your desired output path
+
+# Enable the Spatial Analyst extension
+arcpy.CheckOutExtension("Spatial")
+u'CheckedOut' # The runned statement
+
+# Convert the NetCDF variable to a raster
+arcpy.MakeNetCDFRasterLayer_md(netcdf_file, variable, "lon", "lat", "temp_raster")
+<Result 'temp_raster'> # The runned statement, the output file will be displayed as a temporary file
+
+# Save the raster to a TIFF file
+arcpy.CopyRaster_management("temp_raster", output_tiff, "DEFAULTS", "0", "0", "", "", "32_BIT_FLOAT")
+
+# Check in the Spatial Analyst extension
+arcpy.CheckInExtension("Spatial")
+u'CheckedIn' # The runned statement
+
+print("Conversion complete. The output file is located at: " + output_tiff)
+Conversion complete. The output file is located at: # The runned statement
